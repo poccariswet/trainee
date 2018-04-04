@@ -1,6 +1,7 @@
 var path = require('path');
 
 module.exports = {
+    mode: 'production',
     entry: './src/main.js',
     output: {
         filename: 'bundle.js',
@@ -16,6 +17,14 @@ module.exports = {
             test: /\.(jpe?g|png|gif|svg|ico)(\?.+)?$/,
             loader: 'url-loader',
           },
+          {
+            test: /\.(eot|svg|ttf|woff|woff2)(\?\S*)?$/,
+            loader: 'file-loader'
+          },
         ]
-     }
+     },
+     devServer: {
+        contentBase: path.resolve(__dirname, 'public'),
+        port: 8000,
+     },
 };
