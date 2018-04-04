@@ -1,18 +1,21 @@
 var path = require('path');
 
-module.exports = [{
-    entry: ['./src/main.js'],
+module.exports = {
+    entry: './src/main.js',
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'public')
     },
      module: {
-        rules: [{
+        rules: [
+          {
             test: /\.(css|scss)$/,
-            use: [
-                'style-loader',
-                'css-loader'
-            ]
-        }]
-    }
-}];
+            loader: 'style-loader!css-loader'
+          },
+          {
+            test: /\.(jpe?g|png|gif|svg|ico)(\?.+)?$/,
+            loader: 'url-loader',
+          },
+        ]
+     }
+};

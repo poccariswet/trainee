@@ -1,3 +1,12 @@
 body {
     color: darkcyan;
 }
+
+p:before {
+    display: inline-block;
+    width: 5em;
+    height: 5em;
+    background-image: url("../img/icon.jpg");
+    background-size: contain;
+    content: "";
+}
