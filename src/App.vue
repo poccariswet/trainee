@@ -1,17 +1,17 @@
 <template>
   <div id="app">
-    <h1> gaw-gaw {{ value }}</h1>
+    <h1 class="title"> demo app </h1>
+    <div class="select-block">
     <div class="block">
-      <div class="demo">日付</div>
       <el-date-picker
-      v-model="value1"
-      type="date"
-      placeholder="Pick a day"
-      :picker-options="picupOption">
-    </el-date-picker>
+        v-model="value1"
+        type="date"
+        placeholder="Pick a day"
+        :picker-options="picupOption">
+      </el-date-picker>
     </div>
 
-    <div class="select1">
+    <div class="select">
       <el-select v-model="value2" clearable placeholder="Select">
         <el-option
           v-for="item in options1"
@@ -21,8 +21,47 @@
         </el-option>
       </el-select>
     </div>
-    <h2> {{ value1 }} </h2>
-    <h2> {{ value2 }} </h2>
+
+    <div class="select">
+      <el-select v-model="value3" clearable placeholder="Select">
+        <el-option
+          v-for="item in options1"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value">
+        </el-option>
+      </el-select>
+    </div>
+
+    <div class="select">
+      <el-select v-model="value4" clearable placeholder="Select">
+        <el-option
+          v-for="item in options1"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value">
+        </el-option>
+      </el-select>
+    </div>
+
+    <div class="select">
+      <el-select v-model="value5" clearable placeholder="Select">
+        <el-option
+          v-for="item in options1"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value">
+        </el-option>
+      </el-select>
+    </div>
+    </div>
+
+    <h2 class="val"> {{ value1 }} </h2>
+    <h2 class="val"> {{ value2 }} </h2>
+    <h2 class="val"> {{ value3 }} </h2>
+    <h2 class="val"> {{ value4 }} </h2>
+    <h2 class="val"> {{ value5 }} </h2>
+
   </div>
 </template>
 
@@ -52,7 +91,10 @@ export default {
         label: 'Option5'
       }],
       value1: '',
-      value2: ''
+      value2: '',
+      value3: '',
+      value4: '',
+      value5: ''
     }
   }
 }
@@ -60,10 +102,39 @@ export default {
 
 <style>
 #app {
+  background: #F5F5F5;
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height: 100%;
+}
+
+h1.title {
+  text-align: center;
+  color: #8492A6;
+}
+
+.select-block {
+  padding: 5%;
+}
+
+.block {
+  margin-top: auto;
+  margin-left: 5%;
+  float:left;
+}
+
+.select {
+  margin-top: auto;
+  margin-left: 5%;
+  float:left;
+}
+
+h2.val {
+  margin-top: auto;
+  padding-top: 5px;
+  color: #8492A6;
+  text-align: center;
 }
 
 </style>
