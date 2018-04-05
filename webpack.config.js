@@ -3,6 +3,7 @@ var path = require('path');
 module.exports = {
     mode: 'production',
     entry: './src/main.js',
+    performance: { hints: false },
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'public')
@@ -12,6 +13,10 @@ module.exports = {
           {
             test: /\.(css|scss)$/,
             loader: 'style-loader!css-loader'
+          },
+          {
+            test: /\.vue$/,
+            use: 'vue-loader',
           },
           {
             test: /\.(jpe?g|png|gif|svg|ico)(\?.+)?$/,

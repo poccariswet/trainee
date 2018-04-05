@@ -1,6 +1,13 @@
-var css = {
-    style: require('./scss/style.scss')
-};
+import Vue from 'vue';
+import ElementUI from 'element-ui'
+import locale from 'element-ui/lib/locale/lang/ja'
+import 'element-ui/lib/theme-chalk/index.css'
+import App from './App.vue'
 
-console.log('hello, world');
+//Vue.use(ElementUI, {locale})
+
+new Vue({
+  el: '#app',
+  render: h => h(App)
+})
 
