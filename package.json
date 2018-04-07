@@ -12,6 +12,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.6.1",
     "css-loader": "^0.28.11",
     "file-loader": "^1.1.11",
     "style-loader": "^0.20.3",
@@ -24,6 +28,7 @@
   },
   "dependencies": {
     "element-ui": "^2.3.3",
+    "npm": "^5.8.0",
     "vue": "^2.5.16"
   }
 }
