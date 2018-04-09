@@ -106,7 +106,11 @@ export default {
     Search () {
     },
     changevalue () { // ここで日付が選択されたら、イベントの発火
-      this.value1 = '12345'
+      var dateformat = require('dateformat');
+      var now = new Date();
+      if (dateformat(now, 'isoDate') > dateformat(this.value1, 'isoDate')){
+        console.log(dateformat(this.value1, 'isoDate'));
+      }
     }
   },
 }

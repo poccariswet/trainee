@@ -27,6 +27,7 @@
     "webpack-dev-server": "^3.1.1"
   },
   "dependencies": {
+    "aws-sdk": "^2.222.1",
     "element-ui": "^2.3.3",
     "npm": "^5.8.0",
     "vue": "^2.5.16"
