@@ -6,6 +6,7 @@
         <div class="block">
           <el-date-picker
             v-model="value1"
+            v-on:change="changevalue"
             type="date"
             placeholder="Pick a day"
             :picker-options="picupOption">
@@ -103,9 +104,11 @@ export default {
   },
   methods: {
     Search () {
-
+    },
+    changevalue () { // ここで日付が選択されたら、イベントの発火
+      this.value1 = '12345'
     }
-  }
+  },
 }
 </script>
 
