@@ -59,7 +59,7 @@
 
       </div>
       <div class="button">
-        <el-button type="primary" icon="el-icon-search" @click="Search">Search</el-button>
+        <el-button type="primary" icon="el-icon-search" @click="message">Search</el-button>
       </div>
     </div>
     <h2 class="val"> {{ value1 }} </h2>
@@ -103,14 +103,23 @@ export default {
     }
   },
   methods: {
-    Search () {
-    },
     changevalue () { // ここで日付が選択されたら、イベントの発火
       var dateformat = require('dateformat');
       var now = new Date();
       if (dateformat(now, 'isoDate') > dateformat(this.value1, 'isoDate')){
         console.log(dateformat(this.value1, 'isoDate'));
       }
+    },
+    message () {
+      if (this.value1 == '' || this.value1 == null) {
+        this.$message({
+          message: '日付が選択されていません',
+          type: 'error',
+          duration: 2500
+        })
+        return
+      }
+      console.log(this.value1)
     }
   },
 }
