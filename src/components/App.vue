@@ -62,11 +62,111 @@
         <el-button type="primary" icon="el-icon-search" @click="message">Search</el-button>
       </div>
     </div>
-    <h2 class="val"> {{ value1 }} </h2>
-    <h2 class="val"> {{ value2 }} </h2>
-    <h2 class="val"> {{ value3 }} </h2>
-    <h2 class="val"> {{ value4 }} </h2>
-    <h2 class="val"> {{ value5 }} </h2>
+    <child-component></child-component>
+    <el-table
+      :data="tableData3"
+      style="width: 100%">
+      <el-table-column
+        fixed
+        prop="skucode"
+        label="SKUコード"
+        width="150">
+      </el-table-column>
+      <el-table-column
+        fixed
+        prop="item"
+        label="商品名"
+        width="150">
+      </el-table-column>
+      <el-table-column label="売上数">
+        <el-table-column
+          prop="uriage"
+          label="~9"
+          width="120">
+        </el-table-column>
+        <el-table-column
+          prop="uriage"
+          label="~10"
+          width="120">
+        </el-table-column>
+        <el-table-column
+          prop="uriage"
+          label="~11"
+          width="120">
+        </el-table-column>
+        <el-table-column
+          prop="uriage"
+          label="~12"
+          width="120">
+        </el-table-column>
+        <el-table-column
+          prop="uriage"
+          label="~13"
+          width="120">
+        </el-table-column>
+        <el-table-column
+          prop="uriage"
+          label="~14"
+          width="120">
+        </el-table-column>
+        <el-table-column
+          prop="uriage"
+          label="~15"
+          width="120">
+        </el-table-column>
+        <el-table-column
+          prop="uriage"
+          label="~16"
+          width="120">
+        </el-table-column>
+        <el-table-column
+          prop="uriage"
+          label="~17"
+          width="120">
+        </el-table-column>
+        <el-table-column
+          prop="uriage"
+          label="~18"
+          width="120">
+        </el-table-column>
+        <el-table-column
+          prop="uriage"
+          label="~19"
+          width="120">
+        </el-table-column>
+        <el-table-column
+          prop="uriage"
+          label="~20"
+          width="120">
+        </el-table-column>
+        <el-table-column
+          prop="uriage"
+          label="~21"
+          width="120">
+        </el-table-column>
+        <el-table-column
+          prop="uriage"
+          label="~22"
+          width="120">
+        </el-table-column>
+        <el-table-column
+          prop="uriage"
+          label="~23"
+          width="120">
+        </el-table-column>
+        <el-table-column
+          prop="uriage"
+          label="~24"
+          width="120">
+        </el-table-column>
+        <el-table-column
+          prop="uriage"
+          label="~25"
+          width="120">
+        </el-table-column>
+      </el-table-column>
+    </el-table>
+
   </div>
 </template>
 
@@ -95,6 +195,11 @@ export default {
         value: '5',
         label: 'Option5'
       }],
+      tableData3: [{
+          skucode: '',
+          item: '',
+          uriage: 0,
+        }],
       value1: '',
       value2: '',
       value3: '',
@@ -119,7 +224,6 @@ export default {
         })
         return
       }
-      console.log(this.value1)
     }
   },
 }
@@ -170,5 +274,8 @@ h2.val {
   margin-top: auto;
   text-align: center;
 }
-</style>
 
+.el-table {
+}
+
+</style>
