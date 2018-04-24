@@ -14,34 +14,34 @@
         </div>
 
         <div class="select">
-          <el-select v-model="value2" clearable placeholder="Select">
+          <el-select v-model="value2" v-on:change="getDPTData" clearable placeholder="Select">
             <el-option
-              v-for="item in options1"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
+              v-for="item in Bumonlist"
+              :key="item.lCatId"
+              :label="item.lCatName"
+              :value="item.lCatId">
             </el-option>
           </el-select>
         </div>
 
         <div class="select">
-          <el-select v-model="value3" clearable placeholder="Select">
+          <el-select v-model="value3" v-on:change="getLINEData" clearable placeholder="Select">
             <el-option
-              v-for="item in options1"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
+              v-for="item in DPTlist"
+              :key="item.l2CatId"
+              :label="item.l2CatName"
+              :value="item.l2CatId">
             </el-option>
           </el-select>
         </div>
 
         <div class="select">
-          <el-select v-model="value4" clearable placeholder="Select">
+          <el-select v-model="value4" v-on:change="getCLASSData" clearable placeholder="Select">
             <el-option
-              v-for="item in options1"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
+              v-for="item in LINElist"
+              :key="item.mCatId"
+              :label="item.mCatName"
+              :value="item.mCatId">
             </el-option>
           </el-select>
         </div>
@@ -49,10 +49,10 @@
         <div class="select">
           <el-select v-model="value5" clearable placeholder="Select">
             <el-option
-              v-for="item in options1"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
+              v-for="item in CLASSlist"
+              :key="item.sCatId"
+              :label="item.sCatName"
+              :value="item.sCatId">
             </el-option>
           </el-select>
         </div>
@@ -62,115 +62,16 @@
         <el-button type="primary" icon="el-icon-search" @click="message">Search</el-button>
       </div>
     </div>
-    <child-component></child-component>
-    <el-table
-      :data="tableData3"
-      style="width: 100%">
-      <el-table-column
-        fixed
-        prop="skucode"
-        label="SKUコード"
-        width="150">
-      </el-table-column>
-      <el-table-column
-        fixed
-        prop="item"
-        label="商品名"
-        width="150">
-      </el-table-column>
-      <el-table-column label="売上数">
-        <el-table-column
-          prop="uriage"
-          label="~9"
-          width="120">
-        </el-table-column>
-        <el-table-column
-          prop="uriage"
-          label="~10"
-          width="120">
-        </el-table-column>
-        <el-table-column
-          prop="uriage"
-          label="~11"
-          width="120">
-        </el-table-column>
-        <el-table-column
-          prop="uriage"
-          label="~12"
-          width="120">
-        </el-table-column>
-        <el-table-column
-          prop="uriage"
-          label="~13"
-          width="120">
-        </el-table-column>
-        <el-table-column
-          prop="uriage"
-          label="~14"
-          width="120">
-        </el-table-column>
-        <el-table-column
-          prop="uriage"
-          label="~15"
-          width="120">
-        </el-table-column>
-        <el-table-column
-          prop="uriage"
-          label="~16"
-          width="120">
-        </el-table-column>
-        <el-table-column
-          prop="uriage"
-          label="~17"
-          width="120">
-        </el-table-column>
-        <el-table-column
-          prop="uriage"
-          label="~18"
-          width="120">
-        </el-table-column>
-        <el-table-column
-          prop="uriage"
-          label="~19"
-          width="120">
-        </el-table-column>
-        <el-table-column
-          prop="uriage"
-          label="~20"
-          width="120">
-        </el-table-column>
-        <el-table-column
-          prop="uriage"
-          label="~21"
-          width="120">
-        </el-table-column>
-        <el-table-column
-          prop="uriage"
-          label="~22"
-          width="120">
-        </el-table-column>
-        <el-table-column
-          prop="uriage"
-          label="~23"
-          width="120">
-        </el-table-column>
-        <el-table-column
-          prop="uriage"
-          label="~24"
-          width="120">
-        </el-table-column>
-        <el-table-column
-          prop="uriage"
-          label="~25"
-          width="120">
-        </el-table-column>
-      </el-table-column>
-    </el-table>
+    {{ value2 }}
+    {{ value3 }}
+    {{ value4 }}
+    {{ value5 }}
 
   </div>
 </template>
 
 <script>
+const axios = require('axios');
 export default {
   data () {
     return {
@@ -179,33 +80,21 @@ export default {
           return time.getTime() > Date.now()
         }
       },
-      options1: [{
-        value: '1',
-        label: 'Option1'
-      }, {
-        value: '2',
-        label: 'Option2'
-      }, {
-        value: '3',
-        label: 'Option3'
-      }, {
-        value: '4',
-        label: 'Option4'
-      }, {
-        value: '5',
-        label: 'Option5'
-      }],
-      tableData3: [{
-          skucode: '',
-          item: '',
-          uriage: 0,
-        }],
       value1: '',
       value2: '',
       value3: '',
       value4: '',
-      value5: ''
+      value5: '',
+      endpoint: 'https://faia9q1b3l.execute-api.ap-northeast-1.amazonaws.com/dev/getCategoryList',
+      token: process.env.TOKEN_AOI,
+      Bumonlist: [],
+      DPTlist: [],
+      LINElist: [],
+      CLASSlist: []
     }
+  },
+  mounted () {
+    this.getBumonData()
   },
   methods: {
     changevalue () { // ここで日付が選択されたら、イベントの発火
@@ -224,8 +113,33 @@ export default {
         })
         return
       }
+      this.getData()
+    },
+    getBumonData() {
+      const url = this.endpoint
+      axios.get(url).then((res) => {
+        this.Bumonlist = res.data.plu_code
+      }).catch( error => { console.log(error) } )
+    },
+    getDPTData() {
+      const url = this.endpoint + '?token=' + this.token + '&lCatId=' + this.value2
+      axios.get(url).then((res) => {
+        this.DPTlist = res.data.plu_code
+      }).catch( error => { console.log(error) } )
+    },
+    getLINEData() {
+      const url = this.endpoint + '?token=' + this.token + '&l2CatId=' + this.value3
+      axios.get(url).then((res) => {
+        this.LINElist = res.data.plu_code
+      }).catch( error => { console.log(error) } )
+    },
+    getCLASSData() {
+      const url = this.endpoint + '?token=' + this.token + '&mCatId=' + this.value4
+      axios.get(url).then((res) => {
+        this.CLASSlist = res.data.plu_code
+      }).catch( error => { console.log(error) } )
     }
-  },
+  }
 }
 </script>
 
