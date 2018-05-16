@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npm run serve",
     "build": "webpack --mode production",
-    "serve": "webpack-dev-server --hot --inline"
+    "dev": "webpack-dev-server --hot --inline"
   },
   "keywords": [],
   "author": "",
