@@ -45,22 +45,24 @@ for key in keys:
     records=b""
 
 
-format_csv_3Dlist = [[x.split(',') for x in data] for data in [x.split('\n') for x in rdata]]
+format_csv_3Dlist = [[x.split(',') for x in data] for data in [x.split('\n') for x in rdata]] #split csv , \n
 
-uniqe_sku_li = [set([line[0] for line in lines]) for lines in format_csv_3Dlist]
+uniqe_sku_li = [set([line[0] for line in lines]) for lines in format_csv_3Dlist] #重複なしのskuリスト
 
-last_times = [last_time[-10:-8] for last_time in keys]
+last_times = [last_time[-10:-8] for last_time in keys] #ファイル名から時間を抽出する[ex: TR_JISSEKI_20180418[15]2147.csv]
 
-uniqe_data_dics = {last_time: {sku_code: ['',0] for sku_code in sku_codes} for last_time, sku_codes in zip(last_times, uniqe_sku_li)}
+uniqe_data_dics = {last_time: {sku_code: ['',0] for sku_code in sku_codes} for last_time, sku_codes in zip(last_times, uniqe_sku_li)} #init 2Ddictionary
 
+#↓名前の代入と重複要素の合算
 for last_time, lines in zip(last_times, format_csv_3Dlist):
     for line in lines:
         if len(line) > 2:
             uniqe_data_dics[last_time][line[0]][0] = line[1]
             uniqe_data_dics[last_time][line[0]][1] += float(line[2])
 
-Items = {sku: {} for sku in [flatten for inner in uniqe_sku_li for flatten in inner]}
+Items = {sku: {} for sku in [flatten for inner in uniqe_sku_li for flatten in inner]} #init Items
 
+#↓jsonでポストする用の配列作成
 for last_time in uniqe_data_dics.keys():
     for sku in uniqe_data_dics[last_time].keys():
         if sku != '' and uniqe_data_dics[last_time][sku][0] != '':
