@@ -20,11 +20,8 @@ response = s3client.list_objects(
 
 if 'Contents' in response:  # 該当する key がないと response に 'Contents' が含まれない
     keys = [content['Key'] for content in response['Contents']]
-
-del keys[0:4],keys[-1]
+    del keys[0:4],keys[-1]
 rdata=[]
-b=[]
-skucode = "\'0305056900000\'"
 dtpcode = "\'030000\'"
 records = b""
 
@@ -33,7 +30,6 @@ for key in keys:
         Bucket="ld-rawdata-2",
         Key = key,
         ExpressionType='SQL',
-#Expression="SELECT s._9,s._13 FROM s3Object as s where s._4 like" + skucode,
         Expression="SELECT s._4,s._9,s._13 FROM s3Object as s where s._5 like" + dtpcode,
         InputSerialization = {'CSV': {"FileHeaderInfo": "IGNORE"}},
         OutputSerialization = {'CSV': {}},
