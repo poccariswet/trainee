@@ -92,7 +92,8 @@ def GenerateItems(uniqe_sku_list, uniqe_data_dics, last_time):
         for sku in uniqe_data_dics[last_time].keys():
             if sku != '':
                 Items[sku]["skucode"] = sku                             
-                Items[sku]["p_name"] = uniqe_data_dics[last_time][sku][0]
+                if uniqe_data_dics[last_time][sku][0] != '':
+                    Items[sku]["p_name"] = uniqe_data_dics[last_time][sku][0]
                 Items[sku][last_time] = uniqe_data_dics[last_time][sku][1]
 
     return Items
