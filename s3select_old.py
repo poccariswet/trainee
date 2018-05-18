@@ -85,4 +85,4 @@ for last_time in uniqe_data_dics.keys():
         if sku != '':
             Items[sku]["skucode"] = sku                             
             Items[sku]["p_name"] = uniqe_data_dics[last_time][sku][0]
-Items[sku][last_time] = uniqe_data_dics[last_time][sku][1]
+            Items[sku][last_time] = uniqe_data_dics[last_time][sku][1]
