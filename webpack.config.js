@@ -6,7 +6,7 @@ module.exports = {
     performance: { hints: false },
     output: {
         filename: 'bundle.js',
-        path: path.resolve(__dirname, 'public')
+        path: path.resolve(__dirname, 'dist')
     },
      module: {
         rules: [
@@ -34,7 +34,7 @@ module.exports = {
         ]
      },
      devServer: {
-        contentBase: path.resolve(__dirname, 'public'),
+        contentBase: path.resolve(__dirname, 'dist'),
         port: 8000,
      },
 };
