@@ -2,6 +2,16 @@
   <div id="app">
     <h1 class="title"> 即時集計アプリ </h1>
     <div class="backcolor">
+      <div class="select">
+          <el-select v-model="tenpocode" v-on:change="getTenpocode" clearable placeholder="店舗名">
+            <el-option
+              v-for="item in TenpoList"
+              :key="item.lCatId"
+              :label="item.lCatName"
+              :value="item.lCatId">
+            </el-option>
+        </el-select>
+      </div>
       <div class="select-block">
         <div class="block">
           <el-date-picker
@@ -59,11 +69,16 @@
 
       </div>
       <div class="button">
-        <el-button type="primary" icon="el-icon-search" @click="message">Search</el-button>
+        <el-button type="primary"
+                   icon="el-icon-search"
+                   @click="message">
+                   Search
+        </el-button>
       </div>
     </div>
     <el-table
-      :data="PostList"
+      v-loading="loading"
+      :data="S3DataList"
       style="width: 100%"
       height="600">
       <el-table-column
@@ -80,7 +95,12 @@
       </el-table-column>
       <el-table-column label="売上数">
         <el-table-column
-          prop="Item.9"
+          prop="Item.08"
+          label="~8"
+          width="120">
+        </el-table-column>
+        <el-table-column
+          prop="Item.09"
           label="~9"
           width="120">
         </el-table-column>
@@ -140,28 +160,13 @@
           width="120">
         </el-table-column>
         <el-table-column
-          prop="uriage"
+          prop="Item.21"
           label="~21"
           width="120">
         </el-table-column>
         <el-table-column
-          prop="uriage"
+          prop="Item.22"
           label="~22"
-          width="120">
-        </el-table-column>
-        <el-table-column
-          prop="uriage"
-          label="~23"
-          width="120">
-        </el-table-column>
-        <el-table-column
-          prop="uriage"
-          label="~24"
-          width="120">
-        </el-table-column>
-        <el-table-column
-          prop="uriage"
-          label="~25"
           width="120">
         </el-table-column>
       </el-table-column>
@@ -185,13 +190,15 @@ export default {
       value3: '',
       value4: '',
       value5: '',
+      loading: false,
       endpoint: '',
       token: '',
+      TenpoList: [],
       Bumonlist: [],
       DPTlist: [],
       LINElist: [],
       CLASSlist: [],
-      SampleList: []
+      S3DataList: []
     }
   },
   mounted () {
@@ -209,13 +216,19 @@ export default {
       }
     },
     message () {
-      if (this.value1 == '' || this.value1 == null || this.value2 == '' || this.value2 == null) {
+      if (this.value1 == '' || this.value1 == null) {
         this.$message({
           message: '日付が選択されていません',
           type: 'error',
           duration: 2500
         })
         return
+      } else if (this.value4 == '' || this.value4 == null) {
+        this.$message({
+          message: 'LINECode が選択されていません',
+          type: 'error',
+          duration: 2500
+        })
       } else {
         this.SelectPost()
       }
@@ -227,41 +240,55 @@ export default {
       }).catch( error => { console.log(error) } )
     },
     getDPTData() {
-      const url = this.endpoint + '?token=' + this.token + '&lCatId=' + this.value2
+      const url = this.endpoint + 'getCategoryList' + '?token=' + this.token + '&lCatId=' + this.value2
       axios.get(url).then((res) => {
         this.DPTlist = res.data.plu_code
       }).catch( error => { console.log(error) } )
     },
     getLINEData() {
-      const url = this.endpoint + '?token=' + this.token + '&l2CatId=' + this.value3
+      const url = this.endpoint + 'getCategoryList' + '?token=' + this.token + '&l2CatId=' + this.value3
       axios.get(url).then((res) => {
         this.LINElist = res.data.plu_code
       }).catch( error => { console.log(error) } )
     },
     getCLASSData() {
-      const url = this.endpoint + '?token=' + this.token + '&mCatId=' + this.value4
+      const url = this.endpoint + 'getCategoryList' + '?token=' + this.token + '&mCatId=' + this.value4
       axios.get(url).then((res) => {
         this.CLASSlist = res.data.plu_code
       }).catch( error => { console.log(error) } )
     },
+    getTenpocode() {
+      const url = this.endpoin + 'getStoreList' + '?token=' + this.token
+      axios.get(url).then
+    },
     SelectPost() {
-      const url = ''
+      const dpt = '0'+this.value3+'000'
+      const line = '0'+this.value4
+      const class_code = '00'+this.value5
+      const url = 'https://48ntk8qfj3.execute-api.ap-northeast-1.amazonaws.com/dev/v1/getrawdata2'
       let body = JSON.stringify({
         date: this.date_val,
         BUMONCode: this.value2,
-        DPTCode: this.value3,
-        LINECode: this.value4,
-        CLASSCode: this.value5
-    })
-
+        DPTCode: dpt,
+        LINECode: line,
+        CLASSCode: class_code
+      })
+      this.loading = true;
+      this.S3DataList = ''
       axios.post(url, body, {
         headers:{
           'Content-type': 'application/json'
           }
       }).then((res) => {
-        this.PostList = res.data
+        this.S3DataList = res.data
+        if (this.S3DataList.length != 0) {
+          this.loading = false;
+        }
         console.log(res.data)
-      }).catch( error => { console.log(error) } )
+      }).catch( error => {
+        console.log(error) 
+        this.loading = false;
+        })
     }
   }
 }
