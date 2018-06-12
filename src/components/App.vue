@@ -2,13 +2,13 @@
   <div id="app">
     <h1 class="title"> 即時集計アプリ </h1>
     <div class="backcolor">
-      <div class="select">
-          <el-select v-model="tenpocode" v-on:change="getTenpocode" clearable placeholder="店舗名">
+      <div class="tp-select">
+          <el-select v-model="tenpocode" clearable placeholder="店舗名">
             <el-option
               v-for="item in TenpoList"
-              :key="item.lCatId"
-              :label="item.lCatName"
-              :value="item.lCatId">
+              :key="item.ten_cd"
+              :label="item.ten_name"
+              :value="item.ten_cd">
             </el-option>
         </el-select>
       </div>
@@ -190,6 +190,7 @@ export default {
       value3: '',
       value4: '',
       value5: '',
+      tenpocode: '',
       loading: false,
       endpoint: '',
       token: '',
@@ -203,6 +204,7 @@ export default {
   },
   mounted () {
     this.getBumonData()
+    this.getTenpocode()
   },
   methods: {
     changevalue () { // ここで日付が選択されたら、イベントの発火
@@ -233,8 +235,10 @@ export default {
         this.SelectPost()
       }
     },
+
     getBumonData() {
-      const url = this.endpoint
+      const url = this.endpoint + 'getCategoryList'
+      console.log(url)
       axios.get(url).then((res) => {
         this.Bumonlist = res.data.plu_code
       }).catch( error => { console.log(error) } )
@@ -258,16 +262,29 @@ export default {
       }).catch( error => { console.log(error) } )
     },
     getTenpocode() {
-      const url = this.endpoin + 'getStoreList' + '?token=' + this.token
-      axios.get(url).then
+      const url = this.endpoint + 'getStoreList' + '?token=' + this.token
+      console.log(url)
+      axios.get(url).then((res) => {
+        this.TenpoList = res.data.store_list
+      }).catch( error => { console.log(error) } )
     },
+
     SelectPost() {
       const dpt = '0'+this.value3+'000'
       const line = '0'+this.value4
       const class_code = '00'+this.value5
       const url = 'https://48ntk8qfj3.execute-api.ap-northeast-1.amazonaws.com/dev/v1/getrawdata2'
+      let tpcd = ''
+      if (this.tenpocode < 10) {
+        tpcd = '000' + this.tenpocode.toString()
+      } else if (this.tenpocode < 100)  {
+        tpcd = '00' + this.tenpocode.toString()
+      } else if (this.tenpocode < 1000) {
+        tpcd = '0' + this.tenpocode.toString()
+      }
       let body = JSON.stringify({
         date: this.date_val,
+        TENPOCode: tpcd,
         BUMONCode: this.value2,
         DPTCode: dpt,
         LINECode: line,
@@ -311,9 +328,16 @@ h1.title {
   background: #F5F5F5;
 }
 
+.tp-select{
+  margin-top: auto;
+  padding: 1%;
+  text-align: center;
+}
+
 .select-block {
   height: 100%;
-  padding: 5%;
+  padding: 3%;
+  text-align: center;
 }
 
 .block {
