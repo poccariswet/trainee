@@ -330,19 +330,18 @@ h1.title {
 
 .tp-select{
   margin-top: auto;
-  padding: 1%;
+  padding: 0.4%;
   text-align: center;
 }
 
 .select-block {
   height: 100%;
-  padding: 3%;
-  text-align: center;
+  padding: 5.5%;
 }
 
 .block {
   margin-top: auto;
-  margin-left: 6%;
+  margin-left: 5.5%;
   float:left;
 }
 
